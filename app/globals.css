@@ -1,0 +1,40 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-light leading-relaxed;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-heading);
+  @apply font-medium text-slate-900;
+}
+:root {
+  --logo-from: theme(colors.teal.400);
+  --logo-to: theme(colors.cyan.400);
+}
+/* globals.css  ─ add anywhere */
+@layer utilities {
+  @keyframes borderPulse {
+    0%,
+    100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+}
+@layer components {
+  .border-pulse {
+    @apply bg-gradient-to-r from-logo-from to-logo-to bg-[length:200%_100%] animate-borderPulse;
+  }
+}

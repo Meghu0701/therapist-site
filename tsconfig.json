@@ -1,0 +1,53 @@
+{
+  "compilerOptions": {
+    /* ===================================================
+       Module resolution / path alias
+       =================================================== */
+    "baseUrl": ".", // root of the project
+    "paths": {
+      "@/*": ["./*"] // "@/components/Btn" → "./components/Btn"
+    },
+
+    /* ===================================================
+       Target / module settings
+       (Next.js transpiles modern JS, so ES2020 is fine)
+       =================================================== */
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "lib": ["dom", "dom.iterable", "esnext"],
+
+    /* ===================================================
+       JSX / React
+       =================================================== */
+    "jsx": "preserve", // Next.js handles the JSX transform
+    "allowJs": true, // allow plain JS files when needed
+
+    /* ===================================================
+       Type safety
+       =================================================== */
+    "strict": false, // set to true if you want full strict mode
+    "noEmit": true, // TS only for type‑checking (Next handles build)
+    "isolatedModules": true, // required for Next.js
+    "incremental": true, // speed up TS compilations
+
+    /* Misc */
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+
+    /* Next.js TS plugin (nice IntelliSense) */
+    "plugins": [{ "name": "next" }]
+  },
+
+  /* =====================================================
+     Files to include / exclude
+     ===================================================== */
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts" // added automatically by Next.js
+  ],
+  "exclude": ["node_modules"]
+}
