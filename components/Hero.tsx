@@ -9,7 +9,7 @@ export default function Hero() {
       className="
     relative flex min-h-screen flex-col items-center justify-start
     bg-cover bg-center text-white
-    bg-[url('/oceanwaves.gif')]
+    bg-[url('/oceanwaves.gif')]   
   "
     >
       {/* dark overlay */}
