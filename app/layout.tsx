@@ -1,6 +1,7 @@
 import "./globals.css";
 import { Lora } from "next/font/google";
 import type { Metadata } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const lora = Lora({
   subsets: ["latin"],
