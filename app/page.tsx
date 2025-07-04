@@ -6,9 +6,7 @@ import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
 
 export default function Home() {
-  return <div>Hello from home page</div>;
-}
-
+  return (
     <>
       <Header />
       <main className="space-y-32 md:space-y-40">
