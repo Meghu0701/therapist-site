@@ -45,7 +45,7 @@ export default function FAQ() {
           transition={{ duration: 0.6 }}
           className="relative mx-auto mb-4 w-max text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-teal-200"
         >
-          Frequently&nbsp;Asked&nbsp;Questions
+          F&nbsp;A&nbsp;Q
           <span
             className="
               absolute bottom-0 left-0 h-1 w-full origin-left scale-x-0
