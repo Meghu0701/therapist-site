@@ -5,8 +5,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import next from "next";
 
-const navItems = [
+const NAV: { href: string; label: string }[] = [
   { href: "#about", label: "About" },
   { href: "#services", label: "Services" },
   { href: "#faq", label: "FAQ" },
@@ -14,15 +15,19 @@ const navItems = [
 ];
 
 export default function Header() {
+  /* ───────────────────── local state ───────────────────── */
   const [open, setOpen] = useState(false);
   const [dark, setDark] = useState(false);
 
-  /* -- persist dark‑mode choice -- */
+  /* ── restore persisted theme on first load ── */
   useEffect(() => {
-    const stored = localStorage.getItem("dark") === "true";
-    setDark(stored);
-    document.documentElement.classList.toggle("dark", stored);
+    const saved = localStorage.getItem("dark") === "true";
+    setDark(saved);
+    document.documentElement.classList.toggle("dark", saved);
   }, []);
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", dark);
+  }, [dark]);
 
   const toggleDark = () => {
     const next = !dark;
@@ -31,6 +36,7 @@ export default function Header() {
     document.documentElement.classList.toggle("dark", next);
   };
 
+  /* ─────────────────────  markup  ───────────────────── */
   return (
     <motion.header
       initial={{ y: -12, opacity: 0 }}
@@ -41,45 +47,51 @@ export default function Header() {
         bg-white/80 dark:bg-slate-900/80 backdrop-blur"
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 py-4">
-        {/* ---------- Logo ---------- */}
+        {/* ─── Logo / Brand ─── */}
         <Link href="/" className="flex items-center space-x-3">
           <Image
             src="/images/logo.png"
             alt="Dr. Serena Blake"
             width={40}
             height={40}
-            className="rounded-full"
             priority
+            className="rounded-full"
           />
-          <span className="text-lg font-semibold text-teal-600 dark:text-teal-300 whitespace-nowrap">
+          <span className="whitespace-nowrap text-lg font-semibold text-teal-600 dark:text-teal-300">
             Dr.&nbsp;Serena&nbsp;Blake
           </span>
         </Link>
 
-        {/* ---------- Desktop nav ---------- */}
+        {/* ─── Desktop nav ─── */}
         <nav className="hidden md:flex items-center space-x-8 text-sm font-medium">
-          {navItems.map(({ href, label }) => (
+          {NAV.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
-              className="relative group text-slate-700 dark:text-slate-200 hover:text-teal-500 dark:hover:text-teal-400 transition"
+              className="group relative text-slate-700 dark:text-slate-200
+                         hover:text-teal-500 dark:hover:text-teal-400 transition"
             >
               {label}
-              <span className="absolute inset-x-0 -bottom-0.5 h-[2px] origin-left scale-x-0 bg-gradient-to-r from-teal-400 to-cyan-400 transition-transform duration-200 group-hover:scale-x-100" />
+              <span
+                className="absolute inset-x-0 -bottom-0.5 h-[2px] origin-left
+                           scale-x-0 bg-gradient-to-r from-teal-400 to-cyan-400
+                           transition-transform duration-200 group-hover:scale-x-100"
+              />
             </Link>
           ))}
 
-          {/* dark‑mode button */}
+          {/* theme toggle */}
           <button
             onClick={toggleDark}
             aria-label="Toggle dark mode"
-            className="ml-4 p-1 rounded-full text-slate-600 dark:text-slate-200 hover:text-teal-500 dark:hover:text-teal-400 transition"
+            className="ml-4 p-1 rounded-full text-slate-600 dark:text-slate-200
+                       hover:text-teal-500 dark:hover:text-teal-400 transition"
           >
             {dark ? <Sun size={18} /> : <Moon size={18} />}
           </button>
         </nav>
 
-        {/* ---------- Hamburger (mobile) ---------- */}
+        {/* ─── Hamburger ─── */}
         <button
           onClick={() => setOpen(!open)}
           aria-label="Toggle menu"
@@ -89,19 +101,22 @@ export default function Header() {
         </button>
       </div>
 
-      {/* ---------- Mobile Drawer ---------- */}
+      {/* ─── Mobile drawer ─── */}
       <AnimatePresence>
         {open && (
           <motion.nav
-            key="drawer"
             initial={{ y: -8, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -8, opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="md:hidden border-t border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900"
+            className="md:hidden border-t border-slate-200 dark:border-slate-700
+                       bg-white dark:bg-slate-900"
           >
-            <ul className="flex flex-col px-6 py-4 space-y-4 text-sm font-medium text-slate-700 dark:text-slate-300">
-              {navItems.map(({ href, label }) => (
+            <ul
+              className="flex flex-col px-6 py-4 space-y-4 text-sm font-medium
+                            text-slate-700 dark:text-slate-300"
+            >
+              {NAV.map(({ href, label }) => (
                 <li key={href}>
                   <Link
                     href={href}
@@ -113,7 +128,6 @@ export default function Header() {
                 </li>
               ))}
 
-              {/* Dark‑mode row (mobile) */}
               <li>
                 <button
                   onClick={() => {
@@ -123,7 +137,7 @@ export default function Header() {
                   className="flex items-center gap-2 hover:text-teal-500 dark:hover:text-teal-400 transition"
                 >
                   {dark ? <Sun size={18} /> : <Moon size={18} />}
-                  {dark ? "Light mode" : "Dark mode"}
+                  {dark ? "Light mode" : "Dark mode"}
                 </button>
               </li>
             </ul>
